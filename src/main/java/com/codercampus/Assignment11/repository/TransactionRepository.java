@@ -23,6 +23,13 @@ public class TransactionRepository {
 		return transactions;
 	}
 
+	public Transaction findById(Long transactionId) {
+		return transactions.stream()
+                .filter(t -> t.getId().equals(transactionId))
+                .findFirst()
+                .orElse(null);
+	}
+
 	/*
 	 * To populate the transactions list with previously "serialized" data from the transactions.txt file
 	 * 

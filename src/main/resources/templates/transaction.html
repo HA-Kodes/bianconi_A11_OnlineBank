@@ -1,0 +1,17 @@
+<html xmlns:th="http://thymeleaf.org">
+<head>
+		<title>Transactions Detail</title>
+		<link rel="stylesheet" href="/css/transactions.css"/>
+	</head>
+	<body>
+		<h1>Transaction ID: <span th:text="${transaction.id}"></span>
+        <span class="transaction-type"
+      th:text="${transaction.type == 'D'} ? '(Debit)' : '(Credit)'">
+        </span>
+        </h1>
+        <div>Date: <span th:text="${transaction.date}"></span></div>
+        <div>Amount: <span th:text="${transaction.amount}"></span></div>
+        <div>Description: <span th:text="${transaction.description}"></span></div>
+        <a href="/transactions">back</a>
+    </body>
+</html>
