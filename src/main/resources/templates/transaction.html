@@ -9,7 +9,7 @@
       th:text="${transaction.type == 'D'} ? '(Debit)' : '(Credit)'">
         </span>
         </h1>
-        <div>Date: <span th:text="${transaction.date}"></span></div>
+        <div>Date: <span th:text="${#temporals.format(transaction.date, 'MMMM dd, yyyy')}"></span></div>
         <div>Amount: <span th:text="${transaction.amount}"></span></div>
         <div>Description: <span th:text="${transaction.description}"></span></div>
         <a href="/transactions">back</a>

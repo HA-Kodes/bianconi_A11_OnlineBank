@@ -25,8 +25,8 @@
                 </td>
                 <td th:text="${#temporals.format(transaction.date, 'yyyy-MM-dd HH:mm:ss')}">Date</td>
                 <td th:text="${transaction.retailer}">Retailer</td>
-                <td th:text="${transaction.type == 'D' ? transaction.amount : ''}">Funds In</td>
-                <td th:text="${transaction.type == 'C' ? transaction.amount : ''}">Funds Out</td>
+                <td th:text="${transaction.type == 'C' ? transaction.amount : ''}">Funds In</td>
+                <td th:text="${transaction.type == 'D' ? transaction.amount : ''}">Funds Out</td>
             </tr>
 			
 		</table>
