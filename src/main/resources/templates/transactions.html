@@ -6,73 +6,47 @@
     <link rel="stylesheet" href="/css/transactions.css"/>
 </head>
 <body>
-    <section class="transaction-history">
-        <header>
-            <h2>Transaction History</h2>
-        </header>
+<section class="transaction-history">
+    <header>
+        <h2>Transaction History</h2>
+    </header>
 
-        <table class="transaction-table">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Date</th>
-                    <th>Retailer</th>
-                    <th>Funds In</th>
-                    <th>Funds Out</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="transaction : ${transactions}">
-                    <td>
-                        <a th:href="@{/transactions/{id}(id=${transaction.id})}"
-                           th:text="${transaction.id}">Transaction ID</a>
-                    </td>
-                    <td th:text="${#temporals.format(transaction.date, 'yyyy-MM-dd HH:mm:ss')}">Date</td>
-                    <td th:text="${transaction.retailer}">Retailer</td>
-                    <td th:text="${transaction.type == 'C' ? transaction.amount : ''}">Funds In</td>
-                    <td th:text="${transaction.type == 'D' ? transaction.amount : ''}">Funds Out</td>
-                </tr>
-            </tbody>
-        </table>
+    <table class="transaction-table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Date</th>
+            <th>Retailer</th>
+            <th style="color: green;">Funds In</th>
+            <th style="color: red;">Funds Out</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="transaction : ${transactions}">
+            <td>
+                <a th:href="@{/transactions/{id}(id=${transaction.id})}"
+                   th:text="${transaction.id}">Transaction ID</a>
+            </td>
+            <td th:text="${#temporals.format(transaction.date, 'yyyy-MM-dd HH:mm:ss')}">Date</td>
+            <td th:text="${transaction.retailer}">Retailer</td>
 
-        <footer>
-            <p class="record-note" th:if="${#lists.isEmpty(transactions)}">No transactions found.</p>
-        </footer>
-    </section>
+            <!-- Funds In: Credits (C) -->
+            <td th:text="${transaction.type == 'C' ? '$' + transaction.amount : ''}"
+                style="color: green; font-weight: bold;">$0.00
+            </td>
+
+            <!-- Funds Out: Debits (D) -->
+            <td th:text="${transaction.type == 'D' ? '$' + transaction.amount : ''}"
+                style="color: red; font-weight: bold;">$0.00
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+    <footer>
+        <p class="record-note" th:if="${#lists.isEmpty(transactions)}">No transactions found.</p>
+    </footer>
+</section>
 </body>
 </html>
 
-<!--<html xmlns:th="http://thymeleaf.org">-->
-<!--	<head>-->
-<!--		<title>Online Bank</title>-->
-<!--		<link rel="stylesheet" href="/css/transactions.css"/>-->
-<!--	</head>-->
-<!--	<body>-->
-<!--		<h2>Transaction History</h2>-->
-<!--		-->
-<!--		<table>-->
-<!--			<tr>-->
-<!--				<th>ID</th>-->
-<!--				<th>Date</th>-->
-<!--				<th>Retailer</th>-->
-<!--				<th>Funds In</th>-->
-<!--				<th>Funds Out</th>-->
-<!--			</tr>-->
-<!--			&lt;!&ndash; These 4 rows below are for demonstration purposes only-->
-<!--			     You will need to edit the code below in order to make-->
-<!--			     it dynamically list ALL 100 transactions from the Repo &ndash;&gt;-->
-
-<!--			<tr th:each="transaction : ${transactions}">-->
-<!--                <td>-->
-<!--                    <a th:href="@{/transactions/{id}(id=${transaction.id})}"-->
-<!--                       th:text="${transaction.id}">Transaction ID</a>-->
-<!--                </td>-->
-<!--                <td th:text="${#temporals.format(transaction.date, 'yyyy-MM-dd HH:mm:ss')}">Date</td>-->
-<!--                <td th:text="${transaction.retailer}">Retailer</td>-->
-<!--                <td th:text="${transaction.type == 'C' ? transaction.amount : ''}">Funds In</td>-->
-<!--                <td th:text="${transaction.type == 'D' ? transaction.amount : ''}">Funds Out</td>-->
-<!--            </tr>-->
-<!--			-->
-<!--		</table>-->
-<!--	</body>-->
-<!--</html>-->

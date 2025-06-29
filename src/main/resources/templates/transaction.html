@@ -2,57 +2,48 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Transaction Details</title>
-    <link rel="stylesheet" href="/css/transactions.css" />
+    <title>Transaction Detail</title>
+    <link rel="stylesheet" href="/css/transactions.css"/>
 </head>
 <body>
-    <section class="transaction-details">
-        <header>
-            <h1>
-                Transaction ID:
-                <span th:text="${transaction.id}">12345</span>
-                <span class="transaction-type"
-                      th:text="${transaction.type == 'D'} ? '(Debit)' : '(Credit)'">
-                    (Type)
-                </span>
-            </h1>
-        </header>
+<!-- Transaction Box -->
+<section class="transaction-details"
+         style="border: 2px solid #ccc; padding: 16px; border-radius: 8px; margin-bottom: 24px;">
 
-        <div class="transaction-info">
-            <p><strong>Date:</strong>
-                <span th:text="${#temporals.format(transaction.date, 'MMMM dd, yyyy')}">
-                    April 01, 2025
-                </span>
-            </p>
-            <p><strong>Amount:</strong>
-                <span th:text="${transaction.amount}">$0.00</span>
-            </p>
-            <p><strong>Description:</strong>
-                <span th:text="${transaction.description}">Details here</span>
-            </p>
-        </div>
+    <header>
+        <h1>
+            Transaction ID:
+            <span th:text="${transaction.id}">38</span>
+            <span class="transaction-type"
+                  th:text="${transaction.type == 'D'} ? '(Debit)' : '(Credit)'"
+                  th:style="'color:' + (${transaction.type} == 'D' ? 'red' : 'green') +
+                    '; font-weight: bold;'">(Type)</span>
+        </h1>
+    </header>
 
-        <footer>
-            <a class="back-link" href="/transactions">← Back to all transactions</a>
-        </footer>
-    </section>
+    <div class="transaction-info">
+        <p><strong>Date:</strong>
+            <span th:text="${#temporals.format(transaction.date, 'MMMM dd, yyyy')}">January 01, 2025</span>
+        </p>
+
+        <p><strong>Amount:</strong>
+            <span th:style="'display:inline-block; color:' +
+                                 (${transaction.type} == 'C' ? 'green' : 'red') +
+                                 '; font-weight:bold; border:2px dashed ' +
+                                 (${transaction.type} == 'C' ? 'green' : 'red') +
+                                 '; padding:4px 8px; border-radius:4px;'"
+                  th:text="'$' + ${transaction.amount}">$0.00</span>
+        </p>
+
+        <p><strong>Description:</strong>
+            <span th:text="${transaction.description}">Grocery Store</span>
+        </p>
+    </div>
+</section>
+
+<!-- Back Link Outside the Box -->
+<footer>
+    <a href="/transactions" class="back-link">← Back to all transactions</a>
+</footer>
 </body>
 </html>
-
-<!--<html xmlns:th="http://thymeleaf.org">-->
-<!--<head>-->
-<!--		<title>Transactions Detail</title>-->
-<!--		<link rel="stylesheet" href="/css/transactions.css"/>-->
-<!--	</head>-->
-<!--	<body>-->
-<!--		<h1>Transaction ID: <span th:text="${transaction.id}"></span>-->
-<!--        <span class="transaction-type"-->
-<!--      th:text="${transaction.type == 'D'} ? '(Debit)' : '(Credit)'">-->
-<!--        </span>-->
-<!--        </h1>-->
-<!--        <div>Date: <span th:text="${#temporals.format(transaction.date, 'MMMM dd, yyyy')}"></span></div>-->
-<!--        <div>Amount: <span th:text="${transaction.amount}"></span></div>-->
-<!--        <div>Description: <span th:text="${transaction.description}"></span></div>-->
-<!--        <a href="/transactions">back</a>-->
-<!--    </body>-->
-<!--</html>-->
