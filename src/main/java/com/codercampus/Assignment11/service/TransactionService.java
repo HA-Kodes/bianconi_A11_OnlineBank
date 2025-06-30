@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -23,7 +24,21 @@ public class TransactionService {
     }
 
     public Optional<Transaction> findById(Long id) {
-    return Optional.ofNullable(transactionRepository.findById(id));
+        return Optional.ofNullable(transactionRepository.findById(id));
     }
 
+    public void save(Transaction transaction) {
+        List<Transaction> allTransactions = transactionRepository.findAll();
+
+        if (transaction.getId() == null) {
+            Long maxId = allTransactions.stream()
+                    .map(Transaction::getId)
+                    .filter(Objects::nonNull)
+                    .max(Long::compareTo)
+                    .orElse(0L);
+            transaction.setId(maxId + 1);
+        }
+
+        allTransactions.add(transaction);
+    }
 }

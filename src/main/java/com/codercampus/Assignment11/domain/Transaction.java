@@ -1,5 +1,7 @@
 package com.codercampus.Assignment11.domain;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -10,10 +12,12 @@ public class Transaction implements Serializable {
 	private Long id;
 	private String retailer;
 	private String description;
-	private LocalDateTime date;
 	private BigDecimal amount;
 	private String type;
-	
+
+	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    private LocalDateTime date;
+
 	public Long getId() {
 		return id;
 	}

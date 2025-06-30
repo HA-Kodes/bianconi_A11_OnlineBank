@@ -11,8 +11,29 @@
         <h2>Transaction History</h2>
     </header>
 
+    <!-- ✅ Dynamic Success Banner -->
+    <div class="success-banner" th:if="${actionType}">
+        <span th:switch="${actionType}">
+            <span th:case="'added'">🎉 Transaction successfully <strong>added</strong>!</span>
+            <span th:case="'deleted'">🗑️ Transaction <strong>deleted</strong> with flair!</span>
+            <span th:case="'updated'">✏️ Transaction <strong>updated</strong> like a pro!</span>
+            <span th:case="*">✅ Action completed successfully!</span>
+        </span>
+    </div>
+
+    <!-- 📝 Add Transaction Form -->
+    <form method="post" action="/transactions/add" class="add-form">
+        <input type="text" name="retailer" placeholder="Retailer" required />
+        <input type="text" name="type" placeholder="Type (C or D)" required />
+        <input type="number" name="amount" placeholder="Amount" step="0.01" required />
+        <input type="text" name="description" placeholder="Description" required />
+        <input type="datetime-local" name="date" required />
+        <button type="submit">➕ Add Transaction</button>
+    </form>
+
+    <!-- 📊 Transaction Table -->
     <table class="transaction-table">
-    <thead>
+        <thead>
         <tr>
             <th>ID</th>
             <th>Date</th>
@@ -20,8 +41,8 @@
             <th style="color: green;">Funds In</th>
             <th style="color: red;">Funds Out</th>
         </tr>
-    </thead>
-    <tbody>
+        </thead>
+        <tbody>
         <tr th:each="transaction : ${transactions}">
             <td>
                 <a th:href="@{/transactions/{id}(id=${transaction.id})}"
@@ -30,18 +51,16 @@
             <td th:text="${#temporals.format(transaction.date, 'yyyy-MM-dd HH:mm:ss')}">Date</td>
             <td th:text="${transaction.retailer}">Retailer</td>
 
-            <!-- Funds In: Credits (C) -->
+            <!-- Funds In -->
             <td th:text="${transaction.type == 'C' ? '$' + transaction.amount : ''}"
-                style="color: green; font-weight: bold;">$0.00
-            </td>
+                style="color: green; font-weight: bold;">$0.00</td>
 
-            <!-- Funds Out: Debits (D) -->
+            <!-- Funds Out -->
             <td th:text="${transaction.type == 'D' ? '$' + transaction.amount : ''}"
-                style="color: red; font-weight: bold;">$0.00
-            </td>
+                style="color: red; font-weight: bold;">$0.00</td>
         </tr>
-    </tbody>
-</table>
+        </tbody>
+    </table>
 
     <footer>
         <p class="record-note" th:if="${#lists.isEmpty(transactions)}">No transactions found.</p>
@@ -49,4 +68,3 @@
 </section>
 </body>
 </html>
-
