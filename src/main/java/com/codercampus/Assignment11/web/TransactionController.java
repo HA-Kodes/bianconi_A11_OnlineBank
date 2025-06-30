@@ -2,10 +2,11 @@ package com.codercampus.Assignment11.web;
 
 import com.codercampus.Assignment11.domain.Transaction;
 import com.codercampus.Assignment11.service.TransactionService;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
 @Controller
@@ -19,17 +20,24 @@ public class TransactionController {
     }
 
     @GetMapping
-    public String getAllTransactions(Model model) {
+    public String getAllTransactions(@RequestParam(required = false) String actionType, Model model) {
         model.addAttribute("transactions", transactionService.findAll());
-        return "transactions"; // maps to transactions.html
+        model.addAttribute("actionType", actionType);
+        return "transactions";
     }
 
-    @GetMapping("/{id}")
+    @PostMapping("/add")
+    public String addTransaction(@ModelAttribute Transaction transaction, RedirectAttributes redirectAttributes) {
+        transactionService.save(transaction);
+        redirectAttributes.addAttribute("actionType", "added"); // appends to query string
+        return "redirect:/transactions";
+    }
+
+    @GetMapping("/{id:[0-9]+}")
     public String getTransactionById(@PathVariable Long id, Model model) {
         Transaction transaction = transactionService.findById(id)
-    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Transaction ID not found"));
-
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Transaction ID not found"));
         model.addAttribute("transaction", transaction);
-        return "transaction"; // maps to transaction.html
+        return "transaction";
     }
 }
