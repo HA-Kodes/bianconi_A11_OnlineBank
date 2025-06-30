@@ -6,9 +6,10 @@ import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.codercampus.Assignment11.domain.Transaction;
 import org.springframework.stereotype.Repository;
 
-import com.codercampus.Assignment11.domain.Transaction;
+import com.codercampus.Assignment11.repository.TransactionRepository;
 
 @Repository
 public class TransactionRepository {
